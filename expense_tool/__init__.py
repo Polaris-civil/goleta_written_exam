@@ -9,25 +9,43 @@
 
 作为库使用的最小示例：
     from expense_tool import load_expenses, summarize, render
-    print(render(summarize(load_expenses("examples/sample_expenses.csv"))))
+
+    result = load_expenses("examples/sample_expenses.csv")
+    print(render(summarize(result.expenses), skipped=result.skipped))
 """
 
 from __future__ import annotations
 
 from .errors import CsvFormatError, ExpenseToolError
+from .filters import (
+    DATE_ARGUMENT_FORMAT,
+    CategoryFilter,
+    DateRange,
+    FilterSet,
+    build_category_filter,
+    build_date_range,
+)
 from .loader import DEFAULT_ENCODING, load_expenses
-from .models import Expense
+from .models import Expense, LoadResult, SkippedRow
 from .report import format_amount, render
 from .summary import Summary, summarize
 
-__version__ = "0.1.0"
+__version__ = "0.4.0"
 
 __all__ = [
     "CsvFormatError",
+    "DATE_ARGUMENT_FORMAT",
     "DEFAULT_ENCODING",
+    "CategoryFilter",
+    "DateRange",
     "Expense",
     "ExpenseToolError",
+    "FilterSet",
+    "LoadResult",
+    "SkippedRow",
     "Summary",
+    "build_category_filter",
+    "build_date_range",
     "format_amount",
     "load_expenses",
     "render",
